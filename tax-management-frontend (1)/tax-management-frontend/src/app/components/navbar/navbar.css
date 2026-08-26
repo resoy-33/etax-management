@@ -1,0 +1,40 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.menu-btn {
+  margin-right: 4px;
+}
+
+.logo-icon {
+  margin-right: 8px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 599px) {
+  .logo {
+    font-size: 16px;
+  }
+
+  .logo-icon {
+    display: none;
+  }
+}

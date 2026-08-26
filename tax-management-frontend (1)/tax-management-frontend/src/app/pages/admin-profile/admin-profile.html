@@ -1,0 +1,76 @@
+<div class="header">
+  <h1>Profil Administrateur</h1>
+  <button mat-stroked-button routerLink="/">
+    <mat-icon>arrow_back</mat-icon>
+    Retour au tableau de bord
+  </button>
+</div>
+
+@if (authService.currentAdmin(); as admin) {
+  <mat-card class="profile-card">
+    <div class="identity">
+      <div class="avatar">{{ admin.fullName.charAt(0) }}</div>
+      <div>
+        <div class="name">{{ admin.fullName }}</div>
+        <div class="role">{{ admin.role }} &middot; &#64;{{ admin.username }}</div>
+      </div>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="save()">
+      <div class="grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom complet</mat-label>
+          <input matInput formControlName="fullName" [readonly]="!editing">
+          @if (profileForm.controls.fullName.touched && profileForm.controls.fullName.invalid) {
+            <mat-error>Ce champ est obligatoire.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" [readonly]="!editing">
+          @if (profileForm.controls.email.touched && profileForm.controls.email.invalid) {
+            <mat-error>Email invalide.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="phone" [readonly]="!editing">
+          @if (profileForm.controls.phone.touched && profileForm.controls.phone.invalid) {
+            <mat-error>Numéro invalide (8 chiffres).</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput [value]="admin.username" readonly disabled>
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        @if (!editing) {
+          <button mat-flat-button color="primary" type="button" (click)="startEditing()">
+            <mat-icon>edit</mat-icon>
+            Modifier le profil
+          </button>
+        } @else {
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving">
+            <mat-icon>save</mat-icon>
+            {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+          <button mat-stroked-button type="button" (click)="cancelEditing()" [disabled]="saving">
+            Annuler
+          </button>
+        }
+
+        <span class="spacer"></span>
+
+        <button mat-stroked-button color="warn" type="button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Déconnexion
+        </button>
+      </div>
+    </form>
+  </mat-card>
+}

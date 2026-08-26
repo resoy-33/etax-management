@@ -1,0 +1,28 @@
+<h1>Tableau de bord</h1>
+<p class="subtitle">Bienvenue dans le système de gestion fiscale.</p>
+
+<div class="cards">
+  <mat-card class="stat-card" appearance="outlined">
+    <mat-icon class="stat-icon blue">groups</mat-icon>
+    <div class="stat-value">{{ taxpayerService.totalCount() }}</div>
+    <div class="stat-label">Contribuables inscrits</div>
+  </mat-card>
+
+  <mat-card class="stat-card" appearance="outlined">
+    <mat-icon class="stat-icon orange">hourglass_top</mat-icon>
+    <div class="stat-value">{{ taxpayerService.pendingCount() }}</div>
+    <div class="stat-label">Enregistrements en attente</div>
+  </mat-card>
+
+  <mat-card class="stat-card" appearance="outlined">
+    <mat-icon class="stat-icon green">check_circle</mat-icon>
+    <div class="stat-value">{{ taxpayerService.activeCount() }}</div>
+    <div class="stat-label">Contribuables actifs</div>
+  </mat-card>
+
+  <mat-card class="stat-card" appearance="outlined">
+    <mat-icon class="stat-icon purple">fact_check</mat-icon>
+    <div class="stat-value">18</div>
+    <div class="stat-label">Audits fiscaux</div>
+  </mat-card>
+</div>

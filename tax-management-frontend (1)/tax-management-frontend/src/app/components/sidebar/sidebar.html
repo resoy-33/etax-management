@@ -1,0 +1,34 @@
+<div class="sidebar">
+  <div class="brand">
+    <mat-icon class="brand-icon">account_balance</mat-icon>
+    <span class="brand-text">OTR &middot; e-Tax</span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-nav-list>
+    @for (item of navItems; track item.link) {
+      @if (!item.disabled) {
+        <a
+          mat-list-item
+          [routerLink]="item.link"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: !!item.exact }"
+          (click)="linkClicked.emit()">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      } @else {
+        <a
+          mat-list-item
+          disabled
+          class="disabled-link"
+          matTooltip="Bientôt disponible"
+          matTooltipPosition="right">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    }
+  </mat-nav-list>
+</div>

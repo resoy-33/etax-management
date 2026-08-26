@@ -1,0 +1,22 @@
+@if (isLoginPage()) {
+  <router-outlet></router-outlet>
+} @else {
+  <app-navbar [showMenuButton]="showMenuButton" (menuToggle)="toggleSidenav()"></app-navbar>
+
+  <mat-sidenav-container class="app-container">
+    <mat-sidenav
+      #sidenav
+      class="app-sidenav"
+      [mode]="sidenavMode()"
+      [opened]="sidenavOpened()"
+      (openedChange)="sidenavOpened.set($event)">
+      <app-sidebar (linkClicked)="closeIfMobile()"></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="app-content">
+      <div class="page">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+}

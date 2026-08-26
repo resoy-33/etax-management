@@ -1,0 +1,179 @@
+<div class="header">
+  <h1>{{ editingId ? 'Modifier un Contribuable' : "Enregistrement d'un Contribuable" }}</h1>
+  <button mat-stroked-button routerLink="/taxpayers">
+    <mat-icon>arrow_back</mat-icon>
+    Retour à la liste
+  </button>
+</div>
+
+<form [formGroup]="taxpayerForm" (ngSubmit)="saveTaxpayer()">
+
+  <mat-card class="section">
+    <h2>Informations Générales</h2>
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Type de contribuable</mat-label>
+        <mat-select formControlName="taxpayerType">
+          <mat-option value="Personne Physique">Personne Physique</mat-option>
+          <mat-option value="Personne Morale">Personne Morale</mat-option>
+        </mat-select>
+        @if (taxpayerForm.controls.taxpayerType.touched && taxpayerForm.controls.taxpayerType.invalid) {
+          <mat-error>Ce champ est obligatoire.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>NIF</mat-label>
+        <input matInput formControlName="nif" placeholder="Numéro Fiscal">
+        @if (taxpayerForm.controls.nif.touched && taxpayerForm.controls.nif.invalid) {
+          <mat-error>NIF invalide (7 à 15 chiffres).</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Statut</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="Actif">Actif</mat-option>
+          <mat-option value="En attente">En attente</mat-option>
+          <mat-option value="Inactif">Inactif</mat-option>
+          <mat-option value="Suspendu">Suspendu</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date d'immatriculation</mat-label>
+        <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
+        <mat-datepicker-toggle matIconSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #registrationPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  @if (isPersonnePhysique) {
+    <mat-card class="section">
+      <h2>Informations Personnelles</h2>
+      <div class="grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName">
+          @if (taxpayerForm.controls.firstName.touched && taxpayerForm.controls.firstName.hasError('required')) {
+            <mat-error>Prénom obligatoire.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName">
+          @if (taxpayerForm.controls.lastName.touched && taxpayerForm.controls.lastName.hasError('required')) {
+            <mat-error>Nom obligatoire.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CIN</mat-label>
+          <input matInput formControlName="cin">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="birthPicker" formControlName="birthDate">
+          <mat-datepicker-toggle matIconSuffix [for]="birthPicker"></mat-datepicker-toggle>
+          <mat-datepicker #birthPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-card>
+  }
+
+  @if (isPersonneMorale) {
+    <mat-card class="section">
+      <h2>Informations de l'Entreprise</h2>
+      <div class="grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Raison sociale</mat-label>
+          <input matInput formControlName="companyName">
+          @if (taxpayerForm.controls.companyName.touched && taxpayerForm.controls.companyName.hasError('required')) {
+            <mat-error>Raison sociale obligatoire.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Registre de commerce</mat-label>
+          <input matInput formControlName="tradeRegister">
+          @if (taxpayerForm.controls.tradeRegister.touched && taxpayerForm.controls.tradeRegister.hasError('required')) {
+            <mat-error>Registre de commerce obligatoire.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-card>
+  }
+
+  <mat-card class="section">
+    <h2>Coordonnées</h2>
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="phone">
+        @if (taxpayerForm.controls.phone.touched && taxpayerForm.controls.phone.invalid) {
+          <mat-error>Numéro invalide (8 chiffres).</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+        @if (taxpayerForm.controls.email.touched && taxpayerForm.controls.email.hasError('email')) {
+          <mat-error>Email invalide.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Ville</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Code Postal</mat-label>
+        <input matInput formControlName="postalCode">
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <mat-card class="section">
+    <h2>Informations Fiscales</h2>
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Activité économique</mat-label>
+        <input matInput formControlName="activity">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Centre Fiscal</mat-label>
+        <input matInput formControlName="taxCenter">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Régime Fiscal</mat-label>
+        <mat-select formControlName="taxRegime">
+          <mat-option value="Réel">Réel</mat-option>
+          <mat-option value="Forfaitaire">Forfaitaire</mat-option>
+          <mat-option value="Micro Entreprise">Micro Entreprise</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <div class="buttons">
+    <button mat-flat-button color="primary" type="submit" [disabled]="saving">
+      <mat-icon>save</mat-icon>
+      {{ saving ? 'Enregistrement...' : (editingId ? 'Mettre à jour' : 'Enregistrer') }}
+    </button>
+    <button mat-stroked-button type="button" routerLink="/taxpayers">
+      Annuler
+    </button>
+  </div>
+</form>

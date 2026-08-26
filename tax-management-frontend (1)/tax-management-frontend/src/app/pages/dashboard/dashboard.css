@@ -1,0 +1,59 @@
+h1 {
+  margin-bottom: 4px;
+  font-size: 28px;
+}
+
+.subtitle {
+  color: var(--mat-sys-on-surface-variant);
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.stat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 10px;
+}
+
+.stat-icon.blue {
+  color: #2563eb;
+}
+
+.stat-icon.orange {
+  color: #f59e0b;
+}
+
+.stat-icon.green {
+  color: #16a34a;
+}
+
+.stat-icon.purple {
+  color: #7c3aed;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: var(--mat-sys-on-surface-variant);
+  margin-top: 6px;
+}
