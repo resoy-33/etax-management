@@ -1,0 +1,17 @@
+# --- Frontend (Angular) ---
+tax-management-frontend/node_modules/
+tax-management-frontend/dist/
+tax-management-frontend/.angular/
+tax-management-frontend/*.log
+
+# --- Backend (Spring Boot) ---
+etax-backend/target/
+etax-backend/data/
+etax-backend/*.log
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
